@@ -3,7 +3,7 @@ Projeto de aplicação simples em php utilizando os conceitos de Programação O
 
 ### Objetivo: 
 
->Desenvolver um sistema CRUD simples em PHP 7 (sem frameworks) e Postgresql para a administração de clientes de uma loja.
+>Desenvolver um sistema CRUD simples em PHP 7 (sem frameworks) em Postgresql para a administração de clientes de uma loja.
 
 
 ### Detalhes sobre o programa:
