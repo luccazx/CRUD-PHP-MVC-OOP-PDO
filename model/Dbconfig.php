@@ -2,8 +2,6 @@
 
 class Dbconfig{
 
-    private $con;
-
     public function __contruct(){
         $this->connect();
     }
@@ -24,16 +22,5 @@ class Dbconfig{
             echo $e->getMessage();
         }
     }
-    public function setCliente($nome,$idade,$cpf,$email,$endereco){
-        $query = "INSERT INTO cliente (nome, email, cpf,endereco,idade) VALUES ('$nome','$email','$cpf','$endereco','$idade')";
-        if (pg_query($this->connect(), $query)):
-            $_SESSION['mensagem'] = "Cadastrado com sucesso";
-            header('Location: ../index.php');
-        else:
-            $_SESSION['mensagem'] = "Erro no cadastro";
-            header('Location: ../index.php');
-        endif;
-    }
-
 }
 ?>

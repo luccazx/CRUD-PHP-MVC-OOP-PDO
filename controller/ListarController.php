@@ -11,7 +11,7 @@ class ListarController{
 
     public function criarTabela(){ //listar
         $this->cliente = new Cliente();
-        $row = $this->cliente->getAllUsers();
+        $row = $this->cliente->getCliente();
         foreach ($row as $value){
             echo "<tr>";
             echo "<td>" .$value['nome'] . "</td>";
