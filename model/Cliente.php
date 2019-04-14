@@ -60,7 +60,7 @@ class Cliente extends Dbconfig {
         $this->endereco = $endereco;
     }
 
-    public function getAllUsers()
+    public function getCliente()
     {
         $sql = "SELECT * FROM CLIENTE";
         $stmt =$this->connect()->query($sql);
@@ -70,7 +70,26 @@ class Cliente extends Dbconfig {
         return $array;
     }//retorna todos os clientes
 
-    public function queryUser()
+    public function setCliente($nome,$idade,$cpf,$email,$endereco){
+
+        $sql = "INSERT INTO cliente (nome, email, cpf,endereco,idade) VALUES (:nome,:email,:cpf,:endereco,:idade)";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email',$email);
+        $stmt->bindParam(':cpf',$cpf);
+        $stmt->bindParam(':endereco',$endereco);
+        $stmt->bindParam(':idade',$idade);
+        if($stmt->execute()){
+            $_SESSION['mensagem'] = "Cadastrado com sucesso";
+            header('Location: ..view/index.php');
+        } else {
+            $_SESSION['mensagem'] = "Erro ao Cadastrar";
+            header('Location: ..view/index.php');;
+        }
+
+    }
+
+    public function queryCliente()
     {
         $this->setNome("teste1");
         $sql = "SELECT * FROM CLIENTE WHERE nome=?";
@@ -83,4 +102,8 @@ class Cliente extends Dbconfig {
             }
         }
     }//busca cliente por id
+
+    public function updateCliente(){}
+
+    public function deletarCliente(){}
 }

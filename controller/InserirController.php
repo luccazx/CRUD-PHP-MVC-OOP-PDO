@@ -1,5 +1,6 @@
 <?php
 require_once "../model/Cliente.php";
+session_start();
 
 class InserirController{
 
@@ -20,7 +21,6 @@ class InserirController{
 
         //INSERINDO OS DADOS DO NO BANCO;
         $this->cliente->setCliente($this->cliente->getNome(),$this->cliente->getIdade(),$this->cliente->getCpf(),$this->cliente->getEmail(),$this->cliente->getEndereco());
-
     }
 }
 new InserirController();
