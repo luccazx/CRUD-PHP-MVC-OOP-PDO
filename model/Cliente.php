@@ -62,7 +62,7 @@ class Cliente extends Dbconfig {
 
     public function getCliente()
     {
-        $sql = "SELECT * FROM CLIENTE";
+        $sql = "SELECT * FROM CLIENTE ORDER BY CLIENTE_ID";
         $stmt =$this->connect()->query($sql);
         foreach ($stmt as $row) {
             $array[] = $row;
@@ -89,21 +89,29 @@ class Cliente extends Dbconfig {
 
     }
 
-    public function queryCliente()
+    public function queryCliente($id)
     {
-        $this->setNome("teste1");
-        $sql = "SELECT * FROM CLIENTE WHERE nome=?";
-        $stmt = $this->connect()->prepare($sql);
-        $stmt->execute([$this->getNome()]);
-
-        if ($stmt->rowCount()){
-            while ($row = $stmt->fetch()){
-                return $row['nome'];
-            }
+        //$id=1;
+        $sql = "SELECT * FROM CLIENTE WHERE cliente_id= $id";
+        $stmt =$this->connect()->query($sql);
+        foreach ($stmt as $row) {
+            $array[] = $row;
         }
+        return $array;
     }//busca cliente por id
 
-    public function updateCliente(){}
+    public function updateCliente($nome,$idade,$cpf,$email,$endereco){
+        $sql = "INSERT INTO cliente (nome, email, cpf,endereco,idade) VALUES (?,?,?,?,?)";
+        $stmt = $this->connect()->prepare($sql);
+
+        if($stmt->execute([$nome,$idade,$cpf,$email,$endereco])){
+            $_SESSION['mensagem'] = "Dados alterados com sucesso";
+            header('Location: ..view/index.php');
+        } else {
+            $_SESSION['mensagem'] = "Erro ao Cadastrar";
+            header('Location: ..view/index.php');;
+        }
+    }
 
     public function deletarCliente(){}
 }
