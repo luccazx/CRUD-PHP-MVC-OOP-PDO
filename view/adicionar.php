@@ -4,7 +4,7 @@ include_once '../includes/header.php';
 
 <div class="row">
     <div class="col s12 m6 push-m3">
-		<h3 class="light"> Novo Paciente </h3>
+        <h3 class="light"> ADICIONAR PACIENTE </h3>
         <form method="post" action="../controller/InserirController.php" id="form" name="form" >
             <div class="input-field col s12">
                 <input type="text" id="nome" name="nome" placeholder="NOME" required>

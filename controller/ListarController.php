@@ -1,5 +1,4 @@
 <?php
-
 include_once '../model/Cliente.php';
 class ListarController{
 
@@ -20,7 +19,7 @@ class ListarController{
             echo "<td>" .$value['email'] . "</td>";
             echo "<td>" .$value['endereco'] . "</td>";
             echo "<td><a href=editar.php?id=".$value['cliente_id'] ." class=\"btn-floating orange\"><i class=\"material-icons\">edit</i></td>";
-            echo "<td><a href=\"\" class=\"btn-floating red\"><i class=\"material-icons\">delete</i></a></td>";
+            echo "<td><a onclick=\"return confirm('Tem certeza que deseja deletar o usuário " . $value['nome'] . "')\" href=../controller/DeletarController.php?id=" . $value['cliente_id'] . " class=\"btn-floating red\"><i class=\"material-icons\">delete</i></a></td>";
             echo "</tr>";
         }
     }

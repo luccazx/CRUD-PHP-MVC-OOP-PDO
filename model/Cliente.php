@@ -1,6 +1,5 @@
 <?php
 require_once 'Dbconfig.php';
-
 class Cliente extends Dbconfig {
 
     private $nome;
@@ -8,7 +7,6 @@ class Cliente extends Dbconfig {
     private $email;
     private $idade;
     private $endereco;
-
 
     public function getNome()
     {
@@ -71,47 +69,39 @@ class Cliente extends Dbconfig {
     }//retorna todos os clientes
 
     public function setCliente($nome,$idade,$cpf,$email,$endereco){
-
         $sql = "INSERT INTO cliente (nome, email, cpf,endereco,idade) VALUES (:nome,:email,:cpf,:endereco,:idade)";
         $stmt = $this->connect()->prepare($sql);
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email',$email);
-        $stmt->bindParam(':cpf',$cpf);
-        $stmt->bindParam(':endereco',$endereco);
-        $stmt->bindParam(':idade',$idade);
-        if($stmt->execute()){
-            $_SESSION['mensagem'] = "Cadastrado com sucesso";
-            header('Location: ..view/index.php');
-        } else {
-            $_SESSION['mensagem'] = "Erro ao Cadastrar";
-            header('Location: ..view/index.php');;
-        }
 
-    }
+        if (!$stmt->execute([':nome' => $nome, ':idade' => $idade, ':cpf' => $cpf, ':email' => $email, ':endereco' => $endereco]))
+            return false;
+        return true;
+    }//adiciona
 
     public function queryCliente($id)
     {
-        //$id=1;
-        $sql = "SELECT * FROM CLIENTE WHERE cliente_id= $id";
-        $stmt =$this->connect()->query($sql);
-        foreach ($stmt as $row) {
-            $array[] = $row;
-        }
-        return $array;
+        $sql = "SELECT * FROM cliente WHERE cliente_id=:id";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $result = $stmt->fetch();
     }//busca cliente por id
 
-    public function updateCliente($nome,$idade,$cpf,$email,$endereco){
-        $sql = "INSERT INTO cliente (nome, email, cpf,endereco,idade) VALUES (?,?,?,?,?)";
+    public function updateCliente($nome, $idade, $cpf, $email, $endereco, $id)
+    { //$nome,$idade,$cpf,$email,$endereco
+        $sql = 'UPDATE cliente SET nome=:nome, idade=:idade, cpf=:cpf, email=:email, endereco=:endereco WHERE cliente_id=:id';
         $stmt = $this->connect()->prepare($sql);
-
-        if($stmt->execute([$nome,$idade,$cpf,$email,$endereco])){
-            $_SESSION['mensagem'] = "Dados alterados com sucesso";
-            header('Location: ..view/index.php');
-        } else {
-            $_SESSION['mensagem'] = "Erro ao Cadastrar";
-            header('Location: ..view/index.php');;
-        }
+        if (!$stmt->execute([':nome' => $nome, ':idade' => $idade, ':cpf' => $cpf, ':email' => $email, ':endereco' => $endereco, ':id' => $id]))
+            return false;
+        return true;
     }
 
-    public function deletarCliente(){}
+    public function deletarCliente($id)
+    {
+        $sql = "DELETE FROM cliente WHERE cliente_id =:id";
+        $stmt = $this->connect()->prepare($sql);
+
+        if (!$stmt->execute([':id' => $id]))
+            return false;
+        return true;
+
+    }
 }

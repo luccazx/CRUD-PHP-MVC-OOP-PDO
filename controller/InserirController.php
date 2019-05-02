@@ -20,7 +20,14 @@ class InserirController{
         $this->cliente->setEndereco($_POST['endereco']);
 
         //INSERINDO OS DADOS DO NO BANCO;
-        $this->cliente->setCliente($this->cliente->getNome(),$this->cliente->getIdade(),$this->cliente->getCpf(),$this->cliente->getEmail(),$this->cliente->getEndereco());
+        if ($this->cliente->setCliente($this->cliente->getNome(), $this->cliente->getIdade(), $this->cliente->getCpf(), $this->cliente->getEmail(), $this->cliente->getEndereco())) {
+            $_SESSION['mensagem'] = "Sucesso ao Cadastrar";
+            header('Location: ../view/index.php');;
+        } else {
+            $_SESSION['mensagem'] = "Erro ao Cadastrar";
+            header('Location: ../view/index.php');;
+        }
+
     }
 }
 new InserirController();
